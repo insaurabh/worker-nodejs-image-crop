@@ -31,12 +31,10 @@ if (isMainThread) {
     try {
       const imageObject = await jimp.read(workerData);
       imageObject.scale(0.1).quality(60).write(outImage);
-
-      resolve(outImage);
       console.log(`${threadId} Successfully cropped: ${workerData}`);
       parentPort.postMessage(outImage);
     } catch (error) {
-      console.log(`${threadId} ERROR : ${workerData}`);
+      console.log(`${threadId} ERROR : ${workerData} error: ${error}`);
     }
   })();
 }
